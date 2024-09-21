@@ -8,17 +8,39 @@
 import SwiftUI
 
 
+struct ThemeObject {
+    var emojis: Array<String>
+    var color: Color
+}
 
+struct Themes {
+    
+}
 
 
 struct ContentView: View {
     
     @State var chosenTheme: Array<String> = []
     @State var cardCount: Int
+    @State var themeColor: Color
+    
+    
+    let gameThemes: [ThemeObject] = [
+        ThemeObject(emojis: ["🚁", "✈️", "🚕", "🚃", "🚲", "🛵", "⛵️", "🚢", "🚀"], color: Color(.red)),
+        ThemeObject(emojis: ["🏄🏾‍♀️", "🏀", "🏈", "⚽️", "🏊🏽‍♂️", "🧗🏽‍♀️"], color: Color(.blue)),
+        ThemeObject(emojis: ["🥐", "🍔", "🌮", "🧀", "🍱", "🍫", "🧁", "🍎", "🥑", "🍕", "🍒"], color: Color(.orange))
+    ]
+        
+    
+    
     
     let vehicles = ["🚁", "✈️", "🚕", "🚃", "🚲", "🛵", "⛵️", "🚢", "🚀"]
     let sports = ["🏄🏾‍♀️", "🏀", "🏈", "⚽️", "🏊🏽‍♂️", "🧗🏽‍♀️"]
     let food = ["🥐", "🍔", "🌮", "🧀", "🍱", "🍫", "🧁", "🍎", "🥑", "🍕", "🍒"]
+    
+    let vehiclesColor = Color(.orange)
+    let sportsColor = Color(.blue)
+    let foodColor = Color(.red)
     
     var body: some View {
         VStack {
@@ -30,11 +52,9 @@ struct ContentView: View {
                 if chosenTheme.count > 0 {
                     LazyVGrid(columns: [GridItem(.adaptive(minimum: 65), spacing: 0)], spacing: 0) {
                         ForEach(0..<cardCount, id: \.self) { index in
-                            Group {
-                                CardView(isFaceUp: true, content: chosenTheme[index])
-                            }
-                            .aspectRatio(2/3, contentMode: .fit)
-                            .padding(4)
+                            CardView(isFaceUp: true, themeColor: $themeColor, content: chosenTheme[index])
+                                .aspectRatio(2/3, contentMode: .fit)
+                                .padding(4)
                         }
                     }
                 } else {
@@ -57,7 +77,7 @@ struct ContentView: View {
     }
     
     
-    func createThemeButton (for themeName: String, with iconName: String, emojis data: Array<String>) -> some View {
+    func createThemeButton (for themeName: String, with iconName: String, emojis data: Array<String>, color: Color) -> some View {
         VStack {
             Image(systemName: iconName)
             Text(themeName)
@@ -67,23 +87,24 @@ struct ContentView: View {
         .onTapGesture {
             chosenTheme = (data + data).shuffled()
             cardCount = chosenTheme.count
+            themeColor = color
         }
         
     }
     
     var sportsTheme: some View {
-        createThemeButton(for: "Sports", with: "figure.outdoor.cycle", emojis: sports)
+        createThemeButton(for: "Sports", with: "figure.outdoor.cycle", emojis: sports, color: sportsColor)
     }
     
     var vehiclesTheme: some View {
-        createThemeButton(for: "Vehicles", with: "car", emojis: vehicles)
+        createThemeButton(for: "Vehicles", with: "car", emojis: vehicles, color: vehiclesColor)
     }
     
     var foodTheme: some View {
-        createThemeButton(for: "Food", with: "fork.knife", emojis: food)
+        createThemeButton(for: "Food", with: "fork.knife", emojis: food, color: foodColor)
     }
     
-
+    
     
     func createAddButton (by offset: Int, symbol: String ) -> some View {
         Button(action: {
@@ -107,6 +128,7 @@ struct ContentView: View {
 struct CardView: View {
     
     @State var isFaceUp: Bool
+    @Binding var themeColor: Color
     
     let content: String
     
@@ -126,7 +148,7 @@ struct CardView: View {
             RoundedRectangle(cornerRadius: 10)
                 .opacity(isFaceUp ? 0 : 1)
         }
-        .foregroundColor(.orange)
+        .foregroundColor(themeColor)
         .onTapGesture {
             isFaceUp.toggle()
         }
@@ -134,5 +156,5 @@ struct CardView: View {
 }
 
 #Preview {
-    ContentView(chosenTheme: [], cardCount: 3)
+    ContentView(chosenTheme: [], cardCount: 3, themeColor: .red)
 }
