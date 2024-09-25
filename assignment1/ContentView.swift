@@ -24,12 +24,13 @@ struct ContentView: View {
     @State var cardCount: Int
     @State var themeColor: Color
     
-    
-    let gameThemes: [ThemeObject] = [
-        ThemeObject(emojis: ["🚁", "✈️", "🚕", "🚃", "🚲", "🛵", "⛵️", "🚢", "🚀"], color: Color(.red)),
-        ThemeObject(emojis: ["🏄🏾‍♀️", "🏀", "🏈", "⚽️", "🏊🏽‍♂️", "🧗🏽‍♀️"], color: Color(.blue)),
-        ThemeObject(emojis: ["🥐", "🍔", "🌮", "🧀", "🍱", "🍫", "🧁", "🍎", "🥑", "🍕", "🍒"], color: Color(.orange))
-    ]
+    @ObservedObject var vm: MemoryGameVM
+//    
+//    let gameThemes: [ThemeObject] = [
+//        ThemeObject(emojis: ["🚁", "✈️", "🚕", "🚃", "🚲", "🛵", "⛵️", "🚢", "🚀"], color: Color(.red)),
+//        ThemeObject(emojis: ["🏄🏾‍♀️", "🏀", "🏈", "⚽️", "🏊🏽‍♂️", "🧗🏽‍♀️"], color: Color(.blue)),
+//        ThemeObject(emojis: ["🥐", "🍔", "🌮", "🧀", "🍱", "🍫", "🧁", "🍎", "🥑", "🍕", "🍒"], color: Color(.orange))
+//    ]
         
     
     
@@ -51,8 +52,8 @@ struct ContentView: View {
             ScrollView {
                 if chosenTheme.count > 0 {
                     LazyVGrid(columns: [GridItem(.adaptive(minimum: 65), spacing: 0)], spacing: 0) {
-                        ForEach(0..<cardCount, id: \.self) { index in
-                            CardView(isFaceUp: true, themeColor: $themeColor, content: chosenTheme[index])
+                        ForEach(vm.cards, id: \.self) { card in
+                            CardView(isFaceUp: true, themeColor: $themeColor, content: card.content)
                                 .aspectRatio(2/3, contentMode: .fit)
                                 .padding(4)
                         }
@@ -156,5 +157,5 @@ struct CardView: View {
 }
 
 #Preview {
-    ContentView(chosenTheme: [], cardCount: 3, themeColor: .red)
+    ContentView(chosenTheme: [], cardCount: 3, themeColor: .red, vm: MemoryGameVM())
 }

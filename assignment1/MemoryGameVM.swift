@@ -8,19 +8,27 @@
 import Foundation
 import SwiftUI
 
+//class MemoryGameVM: ObservableObject {
+//    
+//    private static func createMemoryGame() -> MemoryGame<String> {
+//        return MemoryGame {
+//            return "🏀"
+//        }
+//    }
+//    
+//    @Published private var model = createMemoryGame()
+//    
+//    var cards: Array<MemoryGame<String>.Card> {
+//        return model.cards
+//    }
+//    
+//    
+//}
+
 class MemoryGameVM: ObservableObject {
+   @Published private var model = MemoryGame()
     
-    private static func createMemoryGame() -> MemoryGame<String> {
-        return MemoryGame {
-            return "🏀"
-        }
-    }
-    
-    @Published private var model = createMemoryGame()
-    
-    var cards: Array<MemoryGame<String>.Card> {
+    var cards: Array<MemoryGame.Card> {
         return model.cards
     }
-    
-    
 }
