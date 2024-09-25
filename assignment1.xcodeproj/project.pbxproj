@@ -11,6 +11,8 @@
 		74BB87AA2C98D5D9006310F5 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74BB87A92C98D5D9006310F5 /* ContentView.swift */; };
 		74BB87AC2C98D5DB006310F5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 74BB87AB2C98D5DB006310F5 /* Assets.xcassets */; };
 		74BB87AF2C98D5DB006310F5 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 74BB87AE2C98D5DB006310F5 /* Preview Assets.xcassets */; };
+		74BB87B62CA46546006310F5 /* MemoryGameModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74BB87B52CA46546006310F5 /* MemoryGameModel.swift */; };
+		74BB87B82CA4655D006310F5 /* MemoryGameVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74BB87B72CA4655D006310F5 /* MemoryGameVM.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -19,6 +21,8 @@
 		74BB87A92C98D5D9006310F5 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		74BB87AB2C98D5DB006310F5 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		74BB87AE2C98D5DB006310F5 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		74BB87B52CA46546006310F5 /* MemoryGameModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoryGameModel.swift; sourceTree = "<group>"; };
+		74BB87B72CA4655D006310F5 /* MemoryGameVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoryGameVM.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -55,6 +59,8 @@
 				74BB87A92C98D5D9006310F5 /* ContentView.swift */,
 				74BB87AB2C98D5DB006310F5 /* Assets.xcassets */,
 				74BB87AD2C98D5DB006310F5 /* Preview Content */,
+				74BB87B52CA46546006310F5 /* MemoryGameModel.swift */,
+				74BB87B72CA4655D006310F5 /* MemoryGameVM.swift */,
 			);
 			path = assignment1;
 			sourceTree = "<group>";
@@ -139,6 +145,8 @@
 			files = (
 				74BB87AA2C98D5D9006310F5 /* ContentView.swift in Sources */,
 				74BB87A82C98D5D9006310F5 /* assignment1App.swift in Sources */,
+				74BB87B62CA46546006310F5 /* MemoryGameModel.swift in Sources */,
+				74BB87B82CA4655D006310F5 /* MemoryGameVM.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
