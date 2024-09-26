@@ -26,7 +26,27 @@ import SwiftUI
 //}
 
 class MemoryGameVM: ObservableObject {
-   @Published private var model = MemoryGame()
+    
+    private static let emojis = ["👻","🎃","🦇","💀", "🕸️", "🕷️", "👹", "🧙🏽", "😱", "🙀", "🍭", "⚰️"]
+    
+    private static func passCardContent(index: Int) -> String {
+        if emojis.indices.contains(index) {
+            return emojis[index]
+        } else {
+            return "⁉️"
+        }
+        
+    }
+    
+    @Published private var model = createMemoryGame()
+
+    
+    private static func createMemoryGame () -> MemoryGame {
+//        return MemoryGame(numberOfCards: 6) { index in
+//            return emojis[index]
+//        }
+        return MemoryGame(numberOfCards: 13, getContent: passCardContent)
+    }
     
     var cards: Array<MemoryGame.Card> {
         return model.cards
