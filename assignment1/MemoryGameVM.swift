@@ -41,14 +41,11 @@ class MemoryGameVM: ObservableObject {
     @Published private var model = createMemoryGame()
 
     
-    private static func createMemoryGame () -> MemoryGame {
-//        return MemoryGame(numberOfCards: 6) { index in
-//            return emojis[index]
-//        }
+    private static func createMemoryGame () -> MemoryGame<String> {
         return MemoryGame(numberOfCards: 13, getContent: passCardContent)
     }
     
-    var cards: Array<MemoryGame.Card> {
+    var cards: Array<MemoryGame<String>.Card> {
         return model.cards
     }
 }

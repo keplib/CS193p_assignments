@@ -7,30 +7,12 @@
 
 import Foundation
 import SwiftUI
-//struct MemoryGame<CardContent> {
-//    
-//    private(set) var cards: Array<Card>
-//    
-//    init (cardContentFactory: () -> CardContent) {
-//        cards = []
-//        let content = cardContentFactory()
-//        cards.append(Card(content: content, id: "1"))
-//
-//    }
-//    
-//    struct Card {
-//        var isFaceUp = false
-//        let content: CardContent
-//        
-//        var id: String
-//    }
-//}
 
-struct MemoryGame {
+struct MemoryGame<CardContent> {
     
     var cards: Array<Card> = []
     
-    init(numberOfCards: Int, getContent: (Int) -> String) {
+    init(numberOfCards: Int, getContent: (Int) -> CardContent) {
         for index in 0..<numberOfCards {
             let content = getContent(index)
             let id = String(index)
@@ -38,9 +20,9 @@ struct MemoryGame {
         }
     }
     
-    struct Card: Hashable {
+    struct Card: Identifiable {
         var isFaceUp = true
-        let content: String
+        let content: CardContent
         
         var id: String
     }
