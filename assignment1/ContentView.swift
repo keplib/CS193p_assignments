@@ -52,10 +52,12 @@ struct ContentView: View {
             ScrollView {
                 if chosenTheme.count > 0 {
                     LazyVGrid(columns: [GridItem(.adaptive(minimum: 65), spacing: 0)], spacing: 0) {
-                        ForEach(vm.cards, id: \.self) { card in
+                        ForEach(vm.cards) { card in
                             CardView(isFaceUp: true, themeColor: $themeColor, content: card.content)
                                 .aspectRatio(2/3, contentMode: .fit)
                                 .padding(4)
+                                .animation(.default, value: vm.cards)
+                            
                         }
                     }
                 } else {
@@ -63,6 +65,12 @@ struct ContentView: View {
                 }
             }
             .padding(.horizontal)
+            
+            Button(action: {
+                vm.shuffleCards()
+            }, label: {
+                Text("Shuffle cards")
+            })
             
             HStack {
                 cardRemover

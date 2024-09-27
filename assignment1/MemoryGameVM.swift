@@ -42,10 +42,14 @@ class MemoryGameVM: ObservableObject {
 
     
     private static func createMemoryGame () -> MemoryGame<String> {
-        return MemoryGame(numberOfCards: 13, getContent: passCardContent)
+        return MemoryGame(numberOfPairsOfCards: 13, getContent: passCardContent)
     }
     
     var cards: Array<MemoryGame<String>.Card> {
         return model.cards
+    }
+    
+    func shuffleCards() {
+        model.shuffleCards()
     }
 }

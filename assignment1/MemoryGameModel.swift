@@ -8,22 +8,26 @@
 import Foundation
 import SwiftUI
 
-struct MemoryGame<CardContent> {
+struct MemoryGame<CardContent> where CardContent: Equatable {
     
     var cards: Array<Card> = []
     
-    init(numberOfCards: Int, getContent: (Int) -> CardContent) {
-        for index in 0..<numberOfCards {
-            let content = getContent(index)
-            let id = String(index)
-            cards.append(Card(content: content , id: id ))
+    init(numberOfPairsOfCards: Int, getContent: (Int) -> CardContent) {
+        for pairIndex in 0..<numberOfPairsOfCards {
+            let content = getContent(pairIndex)
+            cards.append(Card(content: content , id: "\(pairIndex + 1)a"))
+            cards.append(Card(content: content , id: "\(pairIndex + 1)b" ))
         }
     }
     
-    struct Card: Identifiable {
+    struct Card: Identifiable, Equatable {
         var isFaceUp = true
         let content: CardContent
         
         var id: String
+    }
+    
+    mutating func shuffleCards() {
+        cards.shuffle()
     }
 }
