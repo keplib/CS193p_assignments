@@ -21,13 +21,47 @@ struct MemoryGame<CardContent> where CardContent: Equatable {
     }
     
     struct Card: Identifiable, Equatable {
-        var isFaceUp = true
+        var isFaceUp = false
         let content: CardContent
-        
+        var isMatched = false
         var id: String
     }
     
+    var indexOfPreviouslySelected: Int?
+    
+    
+    
     mutating func shuffleCards() {
         cards.shuffle()
+    }
+    
+    mutating func chooseCard(_ card: Card) {
+        let chosenIndex = cards.firstIndex(of: card)
+        
+        
+        if let chosenIndex {
+            if !cards[chosenIndex].isFaceUp && !cards[chosenIndex].isMatched {
+                if let potentialMatchIndex = indexOfPreviouslySelected {
+                    if cards[chosenIndex].content == cards[potentialMatchIndex].content {
+                        cards[chosenIndex].isMatched = true
+                        cards[potentialMatchIndex].isMatched = true
+                        indexOfPreviouslySelected = nil
+                    } else {
+                        indexOfPreviouslySelected = nil
+                    }
+                } else {
+                    indexOfPreviouslySelected = chosenIndex
+                                for index in cards.indices {
+                                    if index == indexOfPreviouslySelected {
+                                        cards[index].isFaceUp = true
+                                    } else {
+                                        cards[index].isFaceUp = false
+                                    }
+                                }
+                }
+                cards[chosenIndex].isFaceUp = true
+            }
+        }
+        
     }
 }

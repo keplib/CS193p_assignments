@@ -39,8 +39,8 @@ class MemoryGameVM: ObservableObject {
     }
     
     @Published private var model = createMemoryGame()
-
     
+
     private static func createMemoryGame () -> MemoryGame<String> {
         return MemoryGame(numberOfPairsOfCards: 13, getContent: passCardContent)
     }
@@ -51,5 +51,9 @@ class MemoryGameVM: ObservableObject {
     
     func shuffleCards() {
         model.shuffleCards()
+    }
+    
+    func clickCard(_ card:MemoryGame<String>.Card) {
+        model.chooseCard(card)
     }
 }

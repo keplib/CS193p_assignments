@@ -53,11 +53,13 @@ struct ContentView: View {
                 if chosenTheme.count > 0 {
                     LazyVGrid(columns: [GridItem(.adaptive(minimum: 65), spacing: 0)], spacing: 0) {
                         ForEach(vm.cards) { card in
-                            CardView(isFaceUp: true, themeColor: $themeColor, content: card.content)
-                                .aspectRatio(2/3, contentMode: .fit)
-                                .padding(4)
-                                .animation(.default, value: vm.cards)
-                            
+                                CardView(themeColor: $themeColor, card: card)
+                                    .aspectRatio(2/3, contentMode: .fit)
+                                    .padding(4)
+                                    .animation(.default, value: vm.cards)
+                                    .onTapGesture {
+                                        vm.clickCard(card)
+                                    }
                         }
                     }
                 } else {
@@ -73,14 +75,9 @@ struct ContentView: View {
             })
             
             HStack {
-                cardRemover
-                
                 vehiclesTheme
                 foodTheme
                 sportsTheme
-                
-                cardAdder
-                
             }
         }
     }
@@ -115,31 +112,31 @@ struct ContentView: View {
     
     
     
-    func createAddButton (by offset: Int, symbol: String ) -> some View {
-        Button(action: {
-            cardCount += offset
-        }, label: {
-            Image(systemName: symbol)
-        })
-        .disabled(cardCount + offset < 1 || cardCount + offset > chosenTheme.count)
-    }
-    
-    var cardAdder: some View {
-        createAddButton(by: 1, symbol: "plus.circle")
-    }
-    
-    var cardRemover: some View {
-        createAddButton(by: -1, symbol: "minus.circle")
-    }
+//    func createAddButton (by offset: Int, symbol: String ) -> some View {
+//        Button(action: {
+//            cardCount += offset
+//        }, label: {
+//            Image(systemName: symbol)
+//        })
+//        .disabled(cardCount + offset < 1 || cardCount + offset > chosenTheme.count)
+//    }
+//    
+//    var cardAdder: some View {
+//        createAddButton(by: 1, symbol: "plus.circle")
+//    }
+//    
+//    var cardRemover: some View {
+//        createAddButton(by: -1, symbol: "minus.circle")
+//    }
 }
 
 
 struct CardView: View {
     
-    @State var isFaceUp: Bool
     @Binding var themeColor: Color
     
-    let content: String
+//    let content: String
+    let card: MemoryGame<String>.Card
     
     var body: some View {
         
@@ -149,18 +146,16 @@ struct CardView: View {
                     .foregroundColor(.white)
                 RoundedRectangle(cornerRadius: 10)
                     .stroke(style: .init(lineWidth: 2) )
-                Text(content)
+                Text(card.content)
                     .font(.largeTitle)
             }
-            .opacity(isFaceUp ? 1 : 0)
+            .opacity(card.isFaceUp ? 1 : 0)
             
             RoundedRectangle(cornerRadius: 10)
-                .opacity(isFaceUp ? 0 : 1)
+                .opacity(card.isFaceUp ? 0 : 1)
         }
         .foregroundColor(themeColor)
-        .onTapGesture {
-            isFaceUp.toggle()
-        }
+        .opacity(card.isFaceUp || !card.isMatched ? 1: 0)
     }
 }
 
