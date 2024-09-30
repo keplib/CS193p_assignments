@@ -42,6 +42,8 @@ struct MemoryGame<CardContent> where CardContent: Equatable {
         if let chosenIndex {
             if !cards[chosenIndex].isFaceUp && !cards[chosenIndex].isMatched {
                 if let potentialMatchIndex = indexOfPreviouslySelected {
+                    cards[chosenIndex].isFaceUp = true
+                    
                     if cards[chosenIndex].content == cards[potentialMatchIndex].content {
                         cards[chosenIndex].isMatched = true
                         cards[potentialMatchIndex].isMatched = true
@@ -49,17 +51,17 @@ struct MemoryGame<CardContent> where CardContent: Equatable {
                     } else {
                         indexOfPreviouslySelected = nil
                     }
+                    
                 } else {
                     indexOfPreviouslySelected = chosenIndex
-                                for index in cards.indices {
-                                    if index == indexOfPreviouslySelected {
-                                        cards[index].isFaceUp = true
-                                    } else {
-                                        cards[index].isFaceUp = false
-                                    }
-                                }
+                    for index in cards.indices {
+                        if index == indexOfPreviouslySelected {
+                            cards[index].isFaceUp = true
+                        } else {
+                            cards[index].isFaceUp = false
+                        }
+                    }
                 }
-                cards[chosenIndex].isFaceUp = true
             }
         }
         
