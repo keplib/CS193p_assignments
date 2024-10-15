@@ -40,6 +40,10 @@ class MemoryGameVM: ObservableObject {
     
     @Published private var model = createMemoryGame()
     
+    func createNewGame()  {
+         model = MemoryGameVM.createMemoryGame()
+    }
+    
 
     private static func createMemoryGame () -> MemoryGame<String> {
         return MemoryGame(numberOfPairsOfCards: 13, getContent: passCardContent)

@@ -20,18 +20,17 @@ struct Themes {
 
 struct ContentView: View {
     
-    @State var chosenTheme: Array<String> = []
     @State var cardCount: Int
     @State var themeColor: Color
     
     @ObservedObject var vm: MemoryGameVM
-//    
-//    let gameThemes: [ThemeObject] = [
-//        ThemeObject(emojis: ["🚁", "✈️", "🚕", "🚃", "🚲", "🛵", "⛵️", "🚢", "🚀"], color: Color(.red)),
-//        ThemeObject(emojis: ["🏄🏾‍♀️", "🏀", "🏈", "⚽️", "🏊🏽‍♂️", "🧗🏽‍♀️"], color: Color(.blue)),
-//        ThemeObject(emojis: ["🥐", "🍔", "🌮", "🧀", "🍱", "🍫", "🧁", "🍎", "🥑", "🍕", "🍒"], color: Color(.orange))
-//    ]
-        
+    //
+    //    let gameThemes: [ThemeObject] = [
+    //        ThemeObject(emojis: ["🚁", "✈️", "🚕", "🚃", "🚲", "🛵", "⛵️", "🚢", "🚀"], color: Color(.red)),
+    //        ThemeObject(emojis: ["🏄🏾‍♀️", "🏀", "🏈", "⚽️", "🏊🏽‍♂️", "🧗🏽‍♀️"], color: Color(.blue)),
+    //        ThemeObject(emojis: ["🥐", "🍔", "🌮", "🧀", "🍱", "🍫", "🧁", "🍎", "🥑", "🍕", "🍒"], color: Color(.orange))
+    //    ]
+    
     
     
     
@@ -45,89 +44,81 @@ struct ContentView: View {
     
     var body: some View {
         VStack {
+            
             Text("Memorize!")
                 .font(.largeTitle)
                 .fontWeight(.bold)
             
             ScrollView {
-                if chosenTheme.count > 0 {
-                    LazyVGrid(columns: [GridItem(.adaptive(minimum: 65), spacing: 0)], spacing: 0) {
-                        ForEach(vm.cards) { card in
-                                CardView(themeColor: $themeColor, card: card)
-                                    .aspectRatio(2/3, contentMode: .fit)
-                                    .padding(4)
-                                    .animation(.default, value: vm.cards)
-                                    .onTapGesture {
-                                        vm.clickCard(card)
-                                    }
-                        }
+                LazyVGrid(columns: [GridItem(.adaptive(minimum: 65), spacing: 0)], spacing: 0) {
+                    ForEach(vm.cards) { card in
+                        CardView(themeColor: $themeColor, card: card)
+                            .aspectRatio(2/3, contentMode: .fit)
+                            .padding(4)
+                            .animation(.default, value: vm.cards)
+                            .onTapGesture {
+                                vm.clickCard(card)
+                            }
                     }
-                } else {
-                    Text("Please choose a theme below")
                 }
+                
+                Button("Start new game") {
+                    vm.createNewGame()
+                }
+                
             }
             .padding(.horizontal)
             
-            Button(action: {
-                vm.shuffleCards()
-            }, label: {
-                Text("Shuffle cards")
-            })
             
-            HStack {
-                vehiclesTheme
-                foodTheme
-                sportsTheme
-            }
         }
     }
     
     
-    func createThemeButton (for themeName: String, with iconName: String, emojis data: Array<String>, color: Color) -> some View {
-        VStack {
-            Image(systemName: iconName)
-            Text(themeName)
-        }
-        .foregroundColor(.blue)
-        .padding(.horizontal)
-        .onTapGesture {
-            chosenTheme = (data + data).shuffled()
-            cardCount = chosenTheme.count
-            themeColor = color
-        }
-        
-    }
-    
-    var sportsTheme: some View {
-        createThemeButton(for: "Sports", with: "figure.outdoor.cycle", emojis: sports, color: sportsColor)
-    }
-    
-    var vehiclesTheme: some View {
-        createThemeButton(for: "Vehicles", with: "car", emojis: vehicles, color: vehiclesColor)
-    }
-    
-    var foodTheme: some View {
-        createThemeButton(for: "Food", with: "fork.knife", emojis: food, color: foodColor)
-    }
-    
-    
-    
-//    func createAddButton (by offset: Int, symbol: String ) -> some View {
-//        Button(action: {
-//            cardCount += offset
-//        }, label: {
-//            Image(systemName: symbol)
-//        })
-//        .disabled(cardCount + offset < 1 || cardCount + offset > chosenTheme.count)
+//    func createThemeButton (for themeName: String, with iconName: String, emojis data: Array<String>, color: Color) -> some View {
+//        VStack {
+//            Image(systemName: iconName)
+//            Text(themeName)
+//        }
+//        .foregroundColor(.blue)
+//        .padding(.horizontal)
+//        .onTapGesture {
+//            chosenTheme = (data + data).shuffled()
+//            cardCount = chosenTheme.count
+//            themeColor = color
+//        }
+//        
 //    }
-//    
-//    var cardAdder: some View {
-//        createAddButton(by: 1, symbol: "plus.circle")
-//    }
-//    
-//    var cardRemover: some View {
-//        createAddButton(by: -1, symbol: "minus.circle")
-//    }
+    
+    //    var sportsTheme: some View {
+    //        createThemeButton(for: "Sports", with: "figure.outdoor.cycle", emojis: sports, color: sportsColor)
+    //    }
+    //
+    //    var vehiclesTheme: some View {
+    //        createThemeButton(for: "Vehicles", with: "car", emojis: vehicles, color: vehiclesColor)
+    //    }
+    //
+    //    var foodTheme: some View {
+    //        createThemeButton(for: "Food", with: "fork.knife", emojis: food, color: foodColor)
+    //    }
+    //
+    
+    
+    //    func createAddButton (by offset: Int, symbol: String ) -> some View {
+    //        Button(action: {
+    //            cardCount += offset
+    //        }, label: {
+    //            Image(systemName: symbol)
+    //        })
+    //        .disabled(cardCount + offset < 1 || cardCount + offset > chosenTheme.count)
+    //    }
+    //
+    //    var cardAdder: some View {
+    //        createAddButton(by: 1, symbol: "plus.circle")
+    //    }
+    //
+    //    var cardRemover: some View {
+    //        createAddButton(by: -1, symbol: "minus.circle")
+    //    }
 }
 
 
@@ -135,7 +126,7 @@ struct CardView: View {
     
     @Binding var themeColor: Color
     
-//    let content: String
+    //    let content: String
     let card: MemoryGame<String>.Card
     
     var body: some View {
@@ -160,5 +151,5 @@ struct CardView: View {
 }
 
 #Preview {
-    ContentView(chosenTheme: [], cardCount: 3, themeColor: .red, vm: MemoryGameVM())
+    ContentView(cardCount: 3, themeColor: .red, vm: MemoryGameVM())
 }
