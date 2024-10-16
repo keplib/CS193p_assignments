@@ -11,7 +11,7 @@ import SwiftUI
 struct assignment1App: App {
     var body: some Scene {
         WindowGroup {
-            ContentView(cardCount: 3, vm: MemoryGameVM())
+            ContentView(vm: MemoryGameVM())
         }
     }
 }

@@ -8,28 +8,11 @@
 import Foundation
 import SwiftUI
 
-//class MemoryGameVM: ObservableObject {
-//    
-//    private static func createMemoryGame() -> MemoryGame<String> {
-//        return MemoryGame {
-//            return "🏀"
-//        }
-//    }
-//    
-//    @Published private var model = createMemoryGame()
-//    
-//    var cards: Array<MemoryGame<String>.Card> {
-//        return model.cards
-//    }
-//    
-//    
-//}
-
 class MemoryGameVM: ObservableObject {
     
-    private static let emojis = ["👻","🎃","🦇","💀", "🕸️", "🕷️", "👹", "🧙🏽", "😱", "🙀", "🍭", "⚰️"]
+    private static var emojis = ["👻","🎃","🦇","💀", "🕸️", "🕷️", "👹", "🧙🏽", "😱", "🙀", "🍭", "⚰️"]
     
-    private let themes: Array<Theme> = [
+    private static var themes: Array<Theme> = [
         Theme(themeName: "Halloween", themeColor: .blue, themeEmojis: ["👻","🎃","🦇","💀", "🕸️", "🕷️", "👹", "🧙🏽", "😱", "🙀", "🍭", "⚰️"]),
         Theme(themeName: "Vehicles", themeColor: .red, themeEmojis: ["🚁", "✈️", "🚕", "🚃", "🚲", "🛵", "⛵️", "🚢", "🚀"]),
         Theme(themeName: "Flags", themeColor: .indigo, themeEmojis: ["🇳🇴", "🇸🇪", "🏴󠁧󠁢󠁥󠁮󠁧󠁿", "🇺🇸", "🇬🇧", "🇮🇪", "🇨🇦"]),
@@ -39,30 +22,24 @@ class MemoryGameVM: ObservableObject {
     ]
     
     @Published private var model: MemoryGame<String>
-    @Published private var currentTheme: Theme
-   
+    private var currentTheme: Theme
     
     init() {
-        let theme = themes.randomElement()!
-        model = MemoryGameVM.createMemoryGame()
-        currentTheme = theme
+        let randomTheme = MemoryGameVM.themes.randomElement()!
+        currentTheme = randomTheme
+        model = MemoryGameVM.createMemoryGame(with: currentTheme)
     }
     
-    
-    
-    private static func passCardContent(index: Int) -> String {
-        if emojis.indices.contains(index) {
-            return emojis[index]
-        } else {
-            return "⁉️"
+    private static func createMemoryGame (with theme: Theme) -> MemoryGame<String> {
+        return MemoryGame(numberOfPairsOfCards: 13) { pairIndex in
+            
+            if theme.themeEmojis.indices.contains(pairIndex) {
+                theme.themeEmojis[pairIndex]
+            } else {
+                "⁉️"
+            }
         }
-        
     }
-    
-    private static func createMemoryGame () -> MemoryGame<String> {
-        return MemoryGame(numberOfPairsOfCards: 13, getContent: passCardContent)
-    }
-    
     
     var cards: Array<MemoryGame<String>.Card> {
         return model.cards
@@ -85,7 +62,9 @@ class MemoryGameVM: ObservableObject {
     }
     
     func createNewGame()  {
-         model = MemoryGameVM.createMemoryGame()
+        let randomTheme = MemoryGameVM.themes.randomElement()!
+        currentTheme = randomTheme
+        model = MemoryGameVM.createMemoryGame(with: randomTheme)
     }
 }
 
