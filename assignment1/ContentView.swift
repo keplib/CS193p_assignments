@@ -21,7 +21,6 @@ struct Themes {
 struct ContentView: View {
     
     @State var cardCount: Int
-    @State var themeColor: Color
     
     @ObservedObject var vm: MemoryGameVM
     //
@@ -49,10 +48,12 @@ struct ContentView: View {
                 .font(.largeTitle)
                 .fontWeight(.bold)
             
+            Text(vm.themeName)
+            
             ScrollView {
                 LazyVGrid(columns: [GridItem(.adaptive(minimum: 65), spacing: 0)], spacing: 0) {
                     ForEach(vm.cards) { card in
-                        CardView(themeColor: $themeColor, card: card)
+                        CardView(themeColor: vm.themeColor, card: card)
                             .aspectRatio(2/3, contentMode: .fit)
                             .padding(4)
                             .animation(.default, value: vm.cards)
@@ -124,7 +125,7 @@ struct ContentView: View {
 
 struct CardView: View {
     
-    @Binding var themeColor: Color
+    var themeColor: Color
     
     //    let content: String
     let card: MemoryGame<String>.Card
@@ -151,5 +152,5 @@ struct CardView: View {
 }
 
 #Preview {
-    ContentView(cardCount: 3, themeColor: .red, vm: MemoryGameVM())
+    ContentView(cardCount: 3, vm: MemoryGameVM())
 }

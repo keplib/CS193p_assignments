@@ -69,3 +69,12 @@ struct MemoryGame<CardContent> where CardContent: Equatable {
         
     }
 }
+
+struct Theme {
+    var themeName: String
+    var themeColor: Color
+//    var themeNumberOfPairs: Int
+    var themeEmojis: Array<String>
+    
+    
+}
