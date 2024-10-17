@@ -8,50 +8,39 @@
 import Foundation
 import SwiftUI
 
-//class MemoryGameVM: ObservableObject {
-//    
-//    private static func createMemoryGame() -> MemoryGame<String> {
-//        return MemoryGame {
-//            return "🏀"
-//        }
-//    }
-//    
-//    @Published private var model = createMemoryGame()
-//    
-//    var cards: Array<MemoryGame<String>.Card> {
-//        return model.cards
-//    }
-//    
-//    
-//}
-
 class MemoryGameVM: ObservableObject {
     
-    private static let emojis = ["👻","🎃","🦇","💀", "🕸️", "🕷️", "👹", "🧙🏽", "😱", "🙀", "🍭", "⚰️"]
+    init() {
+        currentTheme = themes.randomElement()!
+        model = MemoryGameVM.createMemoryGame(with: currentTheme)
+    }
     
-    private static func passCardContent(index: Int) -> String {
-        if emojis.indices.contains(index) {
-            return emojis[index]
-        } else {
-            return "⁉️"
-        }
+    @Published private var model: MemoryGame<String>
+    private var currentTheme: Theme<String>
+    
+    
+    private static func createMemoryGame (with theme: Theme<String>) -> MemoryGame<String> {
+        let setOfThemeEmojis = theme.setOfThemeEmojis
         
+        let passCard = {(index: Int) -> String in
+            if setOfThemeEmojis.indices.contains(index) {
+                setOfThemeEmojis[index]
+            } else {
+                "⁉️"
+            }
+        }
+        return MemoryGame(numberOfPairsOfCards: 13, getContent: passCard)
     }
     
-    @Published private var model = createMemoryGame()
-    
-    func createNewGame()  {
-         model = MemoryGameVM.createMemoryGame()
+    func resetGame()  {
+        currentTheme = themes.randomElement()!
+        model = MemoryGameVM.createMemoryGame(with: currentTheme)
     }
     
-
-    private static func createMemoryGame () -> MemoryGame<String> {
-        return MemoryGame(numberOfPairsOfCards: 13, getContent: passCardContent)
-    }
     
-    var cards: Array<MemoryGame<String>.Card> {
-        return model.cards
-    }
+    var cards: Array<MemoryGame<String>.Card> { model.cards }
+    
+    var themeColor: Color { currentTheme.themeColor}
     
     func shuffleCards() {
         model.shuffleCards()
@@ -61,3 +50,10 @@ class MemoryGameVM: ObservableObject {
         model.chooseCard(card)
     }
 }
+
+let themes: Array<Theme<String>> = [
+    Theme(themeName: "Halloween", setOfThemeEmojis: ["👻","🎃","🦇","💀", "🕸️", "🕷️", "👹", "🧙🏽", "😱", "🙀", "🍭", "⚰️"], themeColor: .blue),
+    Theme(themeName: "Vehicles", setOfThemeEmojis: ["🚁", "✈️", "🚕", "🚃", "🚲", "🛵", "⛵️", "🚢", "🚀"], themeColor: .yellow),
+    Theme(themeName: "Food", setOfThemeEmojis: ["🥐", "🍔", "🌮", "🧀", "🍱", "🍫", "🧁", "🍎", "🥑", "🍕", "🍒"], themeColor: .green),
+    Theme(themeName: "Sports", setOfThemeEmojis: ["🏄🏾‍♀️", "🏀", "🏈", "⚽️", "🏊🏽‍♂️", "🧗🏽‍♀️"], themeColor: .orange)
+]
