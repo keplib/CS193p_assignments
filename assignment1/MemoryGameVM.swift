@@ -20,16 +20,12 @@ class MemoryGameVM: ObservableObject {
     
     
     private static func createMemoryGame (with theme: Theme<String>) -> MemoryGame<String> {
-        let setOfThemeEmojis = theme.setOfThemeEmojis
+        let setOfThemeEmojis = theme.setOfThemeEmojis.shuffled()
         
         let passCard = {(index: Int) -> String in
-            if setOfThemeEmojis.indices.contains(index) {
-                setOfThemeEmojis[index]
-            } else {
-                "⁉️"
-            }
+            setOfThemeEmojis[index]
         }
-        return MemoryGame(numberOfPairsOfCards: 13, getContent: passCard)
+        return MemoryGame(numberOfPairsOfCards: theme.numberOfPairs, getContent: passCard)
     }
     
     func resetGame()  {
@@ -52,10 +48,10 @@ class MemoryGameVM: ObservableObject {
 }
 
 let themes: Array<Theme<String>> = [
-    Theme(themeName: "Halloween", setOfThemeEmojis: ["👻","🎃","🦇","💀", "🕸️", "🕷️", "👹", "🧙🏽", "😱", "🙀", "🍭", "⚰️"], themeColor: .blue),
-    Theme(themeName: "Vehicles", setOfThemeEmojis: ["🚁", "✈️", "🚕", "🚃", "🚲", "🛵", "⛵️", "🚢", "🚀"], themeColor: .yellow),
-    Theme(themeName: "Food", setOfThemeEmojis: ["🥐", "🍔", "🌮", "🧀", "🍱", "🍫", "🧁", "🍎", "🥑", "🍕", "🍒"], themeColor: .green),
-    Theme(themeName: "Sports", setOfThemeEmojis: ["🏄🏾‍♀️", "🏀", "🏈", "⚽️", "🏊🏽‍♂️", "🧗🏽‍♀️"], themeColor: .orange),
-    Theme(themeName: "Flags", setOfThemeEmojis: ["🇸🇬","🇯🇵","🏴‍☠️","🏳️‍🌈","🇬🇧","🇹🇼","🇺🇸","🇦🇶","🇰🇵","🇭🇰","🇲🇨","🇼🇸"], themeColor: .teal),
-    Theme(themeName: "Animals", setOfThemeEmojis: ["🐔", "🐥", "🐮", "🐷", "🐭", "🐑", "🐖", "🐓"], themeColor: .red)
+    Theme(themeName: "Halloween", setOfThemeEmojis: ["👻","🎃","🦇","💀", "🕸️", "🕷️", "👹", "🧙🏽", "😱", "🙀", "🍭", "⚰️"], themeColor: .blue, numberOfPairs: 10),
+    Theme(themeName: "Vehicles", setOfThemeEmojis: ["🚁", "✈️", "🚕", "🚃", "🚲", "🛵", "⛵️", "🚢", "🚀"], themeColor: .yellow, numberOfPairs: 8),
+    Theme(themeName: "Food", setOfThemeEmojis: ["🥐", "🍔", "🌮", "🧀", "🍱", "🍫", "🧁", "🍎", "🥑", "🍕", "🍒"], themeColor: .green, numberOfPairs: 7),
+    Theme(themeName: "Sports", setOfThemeEmojis: ["🏄🏾‍♀️", "🏀", "🏈", "⚽️", "🏊🏽‍♂️", "🧗🏽‍♀️"], themeColor: .orange, numberOfPairs: 5),
+    Theme(themeName: "Flags", setOfThemeEmojis: ["🇸🇬","🇯🇵","🏴‍☠️","🏳️‍🌈","🇬🇧","🇹🇼","🇺🇸","🇦🇶","🇰🇵","🇭🇰","🇲🇨","🇼🇸"], themeColor: .teal, numberOfPairs: 8),
+    Theme(themeName: "Animals", setOfThemeEmojis: ["🐔", "🐥", "🐮", "🐷", "🐭", "🐑", "🐖", "🐓"], themeColor: .red, numberOfPairs: 6)
 ]

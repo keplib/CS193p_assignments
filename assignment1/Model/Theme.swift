@@ -13,4 +13,5 @@ struct Theme<Content> {
     let themeName: String
     var setOfThemeEmojis: Array<Content>
     var themeColor: Color
+    var numberOfPairs: Int
 }
