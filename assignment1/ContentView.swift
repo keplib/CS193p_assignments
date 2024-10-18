@@ -41,7 +41,6 @@ struct ContentView: View {
     }
 }
 
-
 struct CardView: View {
     
     var themeColor: Color
