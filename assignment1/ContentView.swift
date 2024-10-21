@@ -18,6 +18,8 @@ struct ContentView: View {
                 .font(.largeTitle)
                 .fontWeight(.bold)
             
+            Text("Your scores: \(vm.score)")
+            
             ScrollView {
                 LazyVGrid(columns: [GridItem(.adaptive(minimum: 65), spacing: 0)], spacing: 0) {
                     ForEach(vm.cards) { card in

@@ -36,6 +36,8 @@ class MemoryGameVM: ObservableObject {
     
     var cards: Array<MemoryGame<String>.Card> { model.cards }
     
+    var score: Int { model.score }
+    
     var themeColor: Color {
         switch currentTheme.themeColor {
         case "blue":
