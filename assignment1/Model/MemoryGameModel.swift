@@ -56,14 +56,10 @@ struct MemoryGame<CardContent> where CardContent: Equatable {
                         score += 2
                     } else {
                         indexOfPreviouslySelected = nil
-                        if cards[chosenIndex].hasAlreadyBeenSeen || cards[potentialMatchIndex].hasAlreadyBeenSeen  {
-                            score -= 1
-                        }
                     }
                     
                 } else {
                     indexOfPreviouslySelected = chosenIndex
-                    cards[chosenIndex].hasAlreadyBeenSeen = true
                     for index in cards.indices {
                         if index == indexOfPreviouslySelected {
                             cards[index].isFaceUp = true
