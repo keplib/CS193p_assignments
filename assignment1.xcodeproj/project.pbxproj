@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		743DFD002CC1676F005419B7 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 743DFCFF2CC1676F005419B7 /* Theme.swift */; };
 		74BB87A82C98D5D9006310F5 /* assignment1App.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74BB87A72C98D5D9006310F5 /* assignment1App.swift */; };
 		74BB87AA2C98D5D9006310F5 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74BB87A92C98D5D9006310F5 /* ContentView.swift */; };
 		74BB87AC2C98D5DB006310F5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 74BB87AB2C98D5DB006310F5 /* Assets.xcassets */; };
@@ -16,6 +17,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		743DFCFF2CC1676F005419B7 /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
 		74BB87A42C98D5D9006310F5 /* assignment1.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = assignment1.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		74BB87A72C98D5D9006310F5 /* assignment1App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = assignment1App.swift; sourceTree = "<group>"; };
 		74BB87A92C98D5D9006310F5 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -36,6 +38,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		743DFCFE2CC1674E005419B7 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				74BB87B52CA46546006310F5 /* MemoryGameModel.swift */,
+				743DFCFF2CC1676F005419B7 /* Theme.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
 		74BB879B2C98D5D9006310F5 = {
 			isa = PBXGroup;
 			children = (
@@ -55,11 +66,11 @@
 		74BB87A62C98D5D9006310F5 /* assignment1 */ = {
 			isa = PBXGroup;
 			children = (
+				743DFCFE2CC1674E005419B7 /* Model */,
 				74BB87A72C98D5D9006310F5 /* assignment1App.swift */,
 				74BB87A92C98D5D9006310F5 /* ContentView.swift */,
 				74BB87AB2C98D5DB006310F5 /* Assets.xcassets */,
 				74BB87AD2C98D5DB006310F5 /* Preview Content */,
-				74BB87B52CA46546006310F5 /* MemoryGameModel.swift */,
 				74BB87B72CA4655D006310F5 /* MemoryGameVM.swift */,
 			);
 			path = assignment1;
@@ -145,6 +156,7 @@
 			files = (
 				74BB87AA2C98D5D9006310F5 /* ContentView.swift in Sources */,
 				74BB87A82C98D5D9006310F5 /* assignment1App.swift in Sources */,
+				743DFD002CC1676F005419B7 /* Theme.swift in Sources */,
 				74BB87B62CA46546006310F5 /* MemoryGameModel.swift in Sources */,
 				74BB87B82CA4655D006310F5 /* MemoryGameVM.swift in Sources */,
 			);
