@@ -20,52 +20,82 @@ struct ContentView: View {
             
             Text("Your scores: \(vm.score)")
             
-            ScrollView {
-                LazyVGrid(columns: [GridItem(.adaptive(minimum: 65), spacing: 0)], spacing: 0) {
-                    ForEach(vm.cards) { card in
-                        CardView(themeColor: vm.themeColor , card: card)
-                            .aspectRatio(2/3, contentMode: .fit)
-                            .padding(4)
-                            .animation(.default, value: vm.cards)
-                            .onTapGesture {
-                                vm.clickCard(card)
-                            }
-                    }
-                }
-                
-                Button("Start new game") {
-                    vm.resetGame()
-                }
-                
+        
+                cards
+                    .animation(.default, value: vm.cards)
+            
+            
+            Button("Start new game") {
+                vm.resetGame()
             }
-            .padding(.horizontal)
         }
+        .padding(.horizontal)
+    }
+    
+    
+    var cards: some View {
+        GeometryReader { geometry in
+            
+            let gridItemSize = gridItemWidthThatFits(count: vm.cards.count, size: geometry.size, atAspectRatio: 2/3)
+            
+            LazyVGrid(columns: [GridItem(.adaptive(minimum: gridItemSize), spacing: 0)], spacing: 0) {
+                ForEach(vm.cards) { card in
+                    CardView(card: card)
+                        .aspectRatio(2/3, contentMode: .fit)
+                        .padding(4)
+                        .onTapGesture {
+                            vm.clickCard(card)
+                        }
+                }
+            }
+        }
+        .foregroundColor(vm.themeColor)
+    }
+        
+    func gridItemWidthThatFits(count: Int, size: CGSize, atAspectRatio aspectRatio: CGFloat) -> CGFloat {
+        let cardCount = CGFloat(count)
+        var columnCount: CGFloat = 1
+
+        while columnCount <= cardCount {
+            let width = size.width / columnCount
+            let height = width / aspectRatio
+            let rowCount = (cardCount / columnCount).rounded(.up)
+            
+            
+            if rowCount * height <= size.height  {
+                return width.rounded(.down)
+            }
+            
+            columnCount += 1
+        }
+        
+        let result = min(size.width / cardCount, size.height * aspectRatio).rounded(.down)
+        return result
     }
 }
 
 struct CardView: View {
-    
-    var themeColor: Color
-    
+        
     let card: MemoryGame<String>.Card
     
     var body: some View {
-        
         ZStack {
+            
+            let base = RoundedRectangle(cornerRadius: 12)
+            
             Group {
-                RoundedRectangle(cornerRadius: 10)
-                    .foregroundColor(.white)
-                RoundedRectangle(cornerRadius: 10)
-                    .stroke(style: .init(lineWidth: 2) )
+                base.fill(.white)
+                base.strokeBorder(lineWidth: 2)
                 Text(card.content)
-                    .font(.largeTitle)
+                    .font(.system(size: 50))
+                    .minimumScaleFactor(0.01)
+                    .aspectRatio(contentMode: .fit)
             }
             .opacity(card.isFaceUp ? 1 : 0)
             
-            RoundedRectangle(cornerRadius: 10)
+            base.fill()
                 .opacity(card.isFaceUp ? 0 : 1)
         }
-        .foregroundColor(themeColor)
         .opacity(card.isFaceUp || !card.isMatched ? 1: 0)
     }
 }
